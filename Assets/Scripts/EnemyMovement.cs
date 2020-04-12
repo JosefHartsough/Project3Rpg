@@ -45,24 +45,26 @@ public class EnemyMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         // enemyAnimations.SetFloat("Run", 1);
         // enemyAnimations.SetBool("Run", true);
-        // enemyAnimations.SetBool("LightGuard_Run", true);
+        enemyAnimations.SetBool("Running", true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("x " + transform.position.x);
-        Debug.Log("y " + transform.position.y);
+        // Debug.Log("x " + transform.position.x);
+        // Debug.Log("y " + transform.position.y);
         // enemyAnimations.SetFloat("LightGuard_Run", 1);
         // Every frame resets how much the enemy has changed
         changeInPosition = Vector3.zero;
         // changeInPosition.x = 1;
         changeInPosition.y = -2;
-        Debug.Log("not sure why this isn't printing the bitch above me is?");
-        if (transform.position.y == -20 && enemyState != StateOfEnemy.attack)
+        Debug.Log("is this a thing?" + transform.position[1]);
+        if (transform.position.y < -10)
         {
-            // StartCoroutine(animationCoroutine());
             Debug.Log("are we getting in here?");
+            changeInPosition.y = 0;
+            enemyAnimations.SetBool("Running", false);
+            // StartCoroutine(animationCoroutine());
         }
         // Checks if our current state is walk, make sures the animation is set to move
         else if (enemyState == StateOfEnemy.walk)
@@ -97,7 +99,7 @@ public class EnemyMovement : MonoBehaviour
         {
             MoveCharacter();
             // enemyAnimations.SetFloat("moveX", changeInPosition.x);
-            Debug.Log(enemyAnimations);
+            // Debug.Log(enemyAnimations);
             // enemyAnimations.SetFloat("moveY", changeInPosition.y);
             // enemyAnimations.SetBool("moving", true);
 
