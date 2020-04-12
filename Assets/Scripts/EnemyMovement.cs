@@ -68,8 +68,45 @@ public class EnemyMovement : MonoBehaviour
     }
 
     void determineMove(Vector3 player_position, Vector3 enemy_position){
-        Debug.Log("player poostin: " + player_position);
-        Debug.Log("enemy poostin: " + enemy_position);
+        double dist_to_player_x = (double)(player_position.x - enemy_position.x);
+        double dist_to_player_y = (double)(player_position.y - enemy_position.y);
+        double diagonal_distance = Math.Sqrt(dist_to_player_x * dist_to_player_x + dist_to_player_y * dist_to_player_y);
+        Debug.Log("diagonal_distance: " + diagonal_distance);
+
+        // When the enemy is further than 1 away, move
+        if (diagonal_distance > 1){
+            enemyState = StateOfEnemy.moving;
+            // I am further from the player in the x direction
+            if (Math.Abs(dist_to_player_x) >= Math.Abs(dist_to_player_y)){
+
+                // negative x means the player is to my left
+                if (dist_to_player_x < 0) {
+                    changeInPosition.x = -1;
+                }
+                // positive x means thep player is to my right
+                else {
+                    changeInPosition.x = 1;
+                }
+            }
+            // I am further from the player in the y direction
+            else {
+
+                // negative y means the player is below me
+                if (dist_to_player_y < 0){
+                    changeInPosition.y = -1;
+                }
+                // positive y means the player is above me
+                else {
+                    changeInPosition.y = 1;
+                }
+            }
+        }
+        // I am close to the player, so stop moving
+        else {
+            enemyState = StateOfEnemy.idle;
+            changeInPosition.x = 0;
+            changeInPosition.y = 0;
+        }
     }
 
     void checkState(){
