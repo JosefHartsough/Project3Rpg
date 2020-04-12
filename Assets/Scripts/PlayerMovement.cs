@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Variable to access the players animations
     private Animator playerAnimations;
+
     // Start is called before the first frame update
     void Start()
     {
