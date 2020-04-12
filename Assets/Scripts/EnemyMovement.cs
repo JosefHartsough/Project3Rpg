@@ -29,6 +29,11 @@ public class EnemyMovement : MonoBehaviour
     // Variable for speed of the enemy
     public float speed;
 
+    // Variable for health of the enemy
+    public float health;
+    // Variable for max health of enemy set in Unity (deafult 2)
+    public FloatValue maxHealth;
+
     // Variable for rigidbody movement
     private Rigidbody2D rigidBody;
 
@@ -45,9 +50,10 @@ public class EnemyMovement : MonoBehaviour
     private GameObject player;
     private Vector3 player_position;
 
-    // track enemy position
-    private List<Vector3> move_history;
-    private bool good_move;
+    private void Awake()
+    {
+        health = maxHealth.intialValue;
+    }
 
     // Start is called before the first frame update
     void Start()
