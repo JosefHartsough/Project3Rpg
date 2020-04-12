@@ -14,7 +14,7 @@ public enum StateOfPlayer
 
 // Main class to manage our players movement
 /* <summary>
- * Has all the variables for our player. 
+ * Has all the variables for our player.
  * <function> void Start() -This function is called everytime we start
  * <function> void Update() -This function is calle every frame
  * </summary>
@@ -52,14 +52,14 @@ public class PlayerMovement : MonoBehaviour
         changeInPosition = Vector3.zero;
         changeInPosition.x = Input.GetAxis("Horizontal");
         changeInPosition.y = Input.GetAxis("Vertical");
-        if (Input.GetButtonDown("attack") && playerState != StateOfPlayer.attack) 
+        if (Input.GetButtonDown("attack") && playerState != StateOfPlayer.attack)
         {
             StartCoroutine(animationCoroutine());
         }
         // Checks if our current state is walk, make sures the animation is set to move
         else if(playerState == StateOfPlayer.walk)
         {
-            
+
             UpdateAnimationAndMovement();
         }
         UpdateAnimationAndMovement();
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     }
     /* <summary>
      * Changes the variables set in Unity to change our X
-     * position and our y position to our variables. 
+     * position and our y position to our variables.
      * </summary>
      */
     void UpdateAnimationAndMovement()
