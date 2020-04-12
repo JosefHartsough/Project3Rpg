@@ -45,6 +45,10 @@ public class EnemyMovement : MonoBehaviour
     private GameObject player;
     private Vector3 player_position;
 
+    // track enemy position
+    private List<Vector3> move_history;
+    private bool good_move;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,8 @@ public class EnemyMovement : MonoBehaviour
         enemyAnimations = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
+        move_history = new List<Vector3>();
+        good_move = false;
     }
 
     // Update is called once per frame
@@ -61,7 +67,9 @@ public class EnemyMovement : MonoBehaviour
         changeInPosition = Vector3.zero;
         // reset the positions of the player and enemy
         enemy_position = transform.position;
+        move_history.Add(enemy_position);
         player_position = player.transform.position;
+
         determineMove(player_position, enemy_position);
         checkState();
         UpdateAnimationAndMovement();
@@ -73,6 +81,7 @@ public class EnemyMovement : MonoBehaviour
         double diagonal_distance = Math.Sqrt(dist_to_player_x * dist_to_player_x + dist_to_player_y * dist_to_player_y);
         Debug.Log("diagonal_distance: " + diagonal_distance);
 
+        determineGoodOrBadMove();
         // When the enemy is further than 1 away, move
         if (diagonal_distance > 1){
             enemyState = StateOfEnemy.moving;
@@ -103,9 +112,17 @@ public class EnemyMovement : MonoBehaviour
         }
         // I am close to the player, so stop moving
         else {
-            enemyState = StateOfEnemy.idle;
+            enemyState = StateOfEnemy.attack;
             changeInPosition.x = 0;
             changeInPosition.y = 0;
+        }
+    }
+
+    // Will tell us whether the enemy is running into walls or not
+    void determineGoodOrBadMove(){
+
+        if (move_history.Count > 3){
+
         }
     }
 
@@ -121,12 +138,14 @@ public class EnemyMovement : MonoBehaviour
 
             case StateOfEnemy.moving:
                 Debug.Log("state is moving");
-                UpdateAnimationAndMovement();
                 enemyAnimations.SetBool("Running", true);
+                enemyAnimations.SetBool("Attacking", false);
+                UpdateAnimationAndMovement();
                 break;
 
             case StateOfEnemy.attack:
                 Debug.Log("state is attacking");
+                enemyAnimations.SetBool("Running", false);
                 enemyAnimations.SetBool("Attacking", true);
                 StartCoroutine(animationCoroutine());
                 UpdateAnimationAndMovement();
