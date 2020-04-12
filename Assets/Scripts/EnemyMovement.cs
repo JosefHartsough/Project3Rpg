@@ -43,47 +43,42 @@ public class EnemyMovement : MonoBehaviour
         enemyState = StateOfEnemy.walk;
         enemyAnimations = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        // enemyAnimations.SetFloat("Run", 1);
-        // enemyAnimations.SetBool("Run", true);
         enemyAnimations.SetBool("Running", true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log("x " + transform.position.x);
-        // Debug.Log("y " + transform.position.y);
-        // enemyAnimations.SetFloat("LightGuard_Run", 1);
         // Every frame resets how much the enemy has changed
         changeInPosition = Vector3.zero;
         // changeInPosition.x = 1;
         changeInPosition.y = -2;
-        Debug.Log("is this a thing?" + transform.position[1]);
-        if (transform.position.y < -10)
+        if (transform.position.y < -10 && transform.position.y > -15)
         {
-            Debug.Log("are we getting in here?");
-            changeInPosition.y = 0;
+            // changeInPosition.y = 0;
             enemyAnimations.SetBool("Running", false);
-            // StartCoroutine(animationCoroutine());
+            StartCoroutine(animationCoroutine());
         }
         // Checks if our current state is walk, make sures the animation is set to move
-        else if (enemyState == StateOfEnemy.walk)
+        if (enemyState == StateOfEnemy.walk)
         {
             UpdateAnimationAndMovement();
             // enemyAnimations.SetBool("Run", true);
+            enemyAnimations.SetBool("Attacking", false);
         }
+        Debug.Log("what is state: " + enemyState);
         UpdateAnimationAndMovement();
     }
     // These are called Coroutines. They are used for animations.
     // Creates a small delay between the attack animations and walking.
     private IEnumerator animationCoroutine()
     {
-        // enemyAnimations.SetBool("attacking", true);
+        enemyAnimations.SetBool("Attacking", true);
         enemyState = StateOfEnemy.attack;
         // Wait for 1 frame
         yield return null;
         // Leave false, otherwise our enemy goes back into the movement state
-        // enemyAnimations.SetBool("attacking", false);
+        // enemyAnimations.SetBool("Attacking", false);
         // Waits an additional 3 seconds and sets our state back to walk for a more fluid animation
         yield return new WaitForSeconds(0.3f);
         enemyState = StateOfEnemy.walk;
@@ -98,10 +93,6 @@ public class EnemyMovement : MonoBehaviour
         if (changeInPosition != Vector3.zero)
         {
             MoveCharacter();
-            // enemyAnimations.SetFloat("moveX", changeInPosition.x);
-            // Debug.Log(enemyAnimations);
-            // enemyAnimations.SetFloat("moveY", changeInPosition.y);
-            // enemyAnimations.SetBool("moving", true);
 
         }
         else
