@@ -35,34 +35,40 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 changeInPosition;
 
     // Variable to access the enemys animations
-    // private Animator enemyAnimations;
+    private Animator enemyAnimations;
     // Start is called before the first frame update
+
     void Start()
     {
         enemyState = StateOfEnemy.walk;
-        // enemyAnimations = GetComponent<Animator>();
+        enemyAnimations = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        // enemyAnimations.SetFloat("moveX", 0);
-        // enemyAnimations.SetFloat("moveY", -1);
+        // enemyAnimations.SetFloat("Run", 1);
+        // enemyAnimations.SetBool("Run", true);
+        // enemyAnimations.SetBool("LightGuard_Run", true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("x " + transform.position.x);
+        Debug.Log("y " + transform.position.y);
+        // enemyAnimations.SetFloat("LightGuard_Run", 1);
         // Every frame resets how much the enemy has changed
         changeInPosition = Vector3.zero;
-        // changeInPosition.x = Input.GetAxis("Horizontal");
-        // changeInPosition.y = Input.GetAxis("Vertical");
-        changeInPosition.x = 1;
-        changeInPosition.y = 2;
-        if (Input.GetButtonDown("attack") && enemyState != StateOfEnemy.attack)
+        // changeInPosition.x = 1;
+        changeInPosition.y = -2;
+        Debug.Log("not sure why this isn't printing the bitch above me is?");
+        if (transform.position.y == -20 && enemyState != StateOfEnemy.attack)
         {
-            StartCoroutine(animationCoroutine());
+            // StartCoroutine(animationCoroutine());
+            Debug.Log("are we getting in here?");
         }
         // Checks if our current state is walk, make sures the animation is set to move
         else if (enemyState == StateOfEnemy.walk)
         {
             UpdateAnimationAndMovement();
+            // enemyAnimations.SetBool("Run", true);
         }
         UpdateAnimationAndMovement();
     }
@@ -91,6 +97,7 @@ public class EnemyMovement : MonoBehaviour
         {
             MoveCharacter();
             // enemyAnimations.SetFloat("moveX", changeInPosition.x);
+            Debug.Log(enemyAnimations);
             // enemyAnimations.SetFloat("moveY", changeInPosition.y);
             // enemyAnimations.SetBool("moving", true);
 
@@ -104,7 +111,6 @@ public class EnemyMovement : MonoBehaviour
     void MoveCharacter()
     {
         changeInPosition.Normalize();
-        Debug.Log("t postion: " + transform.position);
         rigidBody.MovePosition(transform.position + changeInPosition * speed * Time.deltaTime);
     }
 }
