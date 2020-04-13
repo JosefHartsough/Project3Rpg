@@ -87,6 +87,7 @@ public class EnemyMovement : MonoBehaviour
         changeInPosition = Vector3.zero;
         // reset the positions of the player and enemy
         enemy_position = transform.position;
+        Debug.Log(transform.name + " position: " + enemy_position);
         move_history.Add(enemy_position);
         player_position = player.transform.position;
 
@@ -102,10 +103,17 @@ public class EnemyMovement : MonoBehaviour
         double dist_to_player_x = (double)(player_position.x - enemy_position.x);
         double dist_to_player_y = (double)(player_position.y - enemy_position.y);
         double diagonal_distance = Math.Sqrt(dist_to_player_x * dist_to_player_x + dist_to_player_y * dist_to_player_y);
-
+        Debug.Log("diagonal_distance to player: " + diagonal_distance);
         determineGoodOrBadMove();
-        // When the enemy is further than 1 away, move
-        if (diagonal_distance > 1){
+
+        // If the enemy is too far away, don't move
+        if (diagonal_distance > 20 ){
+            enemyState = StateOfEnemy.idle;
+            changeInPosition.x = 0;
+            changeInPosition.y = 0;
+        }
+        // When the enemy is closer than the furthest distance not on top of the player
+        else if (diagonal_distance > 1.5 && diagonal_distance <= 20){
             enemyState = StateOfEnemy.moving;
 
             // if it's a good move, take the shortest way, otherwise switch
@@ -197,9 +205,9 @@ public class EnemyMovement : MonoBehaviour
         // Checks if our current state is moving, make sures the animation is set to move
         switch (enemyState){
             case StateOfEnemy.idle:
-                Debug.Log("state is idle");
                 UpdateAnimationAndMovement();
-                enemyAttack.playerInRange = false;
+                // enemyAttack.playerInRange = false;
+                enemyAnimations.SetBool("Idle", true);
                 enemyAnimations.SetBool("Attacking", false);
                 enemyAnimations.SetBool("Running", false);
                 break;
@@ -207,6 +215,7 @@ public class EnemyMovement : MonoBehaviour
             case StateOfEnemy.moving:
                 Debug.Log("state is moving");
                 enemyAttack.playerInRange = false;
+                enemyAnimations.SetBool("Idle", false);
                 enemyAnimations.SetBool("Running", true);
                 enemyAnimations.SetBool("Attacking", false);
                 UpdateAnimationAndMovement();
@@ -215,8 +224,9 @@ public class EnemyMovement : MonoBehaviour
             case StateOfEnemy.attack:
                 Debug.Log("state is attacking");
                 enemyAttack.playerInRange = true;
-                enemyAnimations.SetBool("Running", false);
+                enemyAnimations.SetBool("Idle", false);
                 enemyAnimations.SetBool("Attacking", true);
+                enemyAnimations.SetBool("Running", false);
                 StartCoroutine(animationCoroutine());
                 UpdateAnimationAndMovement();
                 break;
