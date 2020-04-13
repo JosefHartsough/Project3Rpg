@@ -53,6 +53,10 @@ public class EnemyMovement : MonoBehaviour
     // track enemy position
     private List<Vector3> move_history;
     private bool good_move;
+    private int frames_since_good_move;
+
+    // Used in modular math to keep track of frames
+    private int frame_count;
 
     private void Awake()
     {
@@ -68,6 +72,8 @@ public class EnemyMovement : MonoBehaviour
         player = GameObject.Find("Player");
         move_history = new List<Vector3>();
         good_move = true;
+        frame_count = 0;
+        frames_since_good_move = 0;
     }
 
     // Update is called once per frame
@@ -83,6 +89,9 @@ public class EnemyMovement : MonoBehaviour
         determineMove(player_position, enemy_position);
         checkState();
         UpdateAnimationAndMovement();
+
+        // update the frame count
+        frame_count++;
     }
 
     void determineMove(Vector3 player_position, Vector3 enemy_position){
@@ -166,9 +175,14 @@ public class EnemyMovement : MonoBehaviour
                 Math.Abs(move_history[move_history.Count - 1].y - move_history[move_history.Count - 20].y) < 0.2 )
             {
                 good_move = false;
-            }else {
-                good_move = true;
+                frames_since_good_move = 0;
             }
+        }
+
+        // doing this so we stay in the correctional way a little longer
+        frames_since_good_move++;
+        if (frames_since_good_move > 20){
+            good_move = true;
         }
         if (move_history.Count > 121){
             move_history.RemoveRange(0, 20);
