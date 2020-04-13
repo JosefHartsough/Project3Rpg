@@ -58,6 +58,8 @@ public class EnemyMovement : MonoBehaviour
     // Used in modular math to keep track of frames
     private int frame_count;
 
+    EnemyAttack enemyAttack;
+
     private void Awake()
     {
         health = maxHealth.intialValue;
@@ -74,6 +76,8 @@ public class EnemyMovement : MonoBehaviour
         good_move = true;
         frame_count = 0;
         frames_since_good_move = 0;
+
+        enemyAttack = GetComponent<EnemyAttack>();
     }
 
     // Update is called once per frame
@@ -195,12 +199,14 @@ public class EnemyMovement : MonoBehaviour
             case StateOfEnemy.idle:
                 Debug.Log("state is idle");
                 UpdateAnimationAndMovement();
+                enemyAttack.playerInRange = false;
                 enemyAnimations.SetBool("Attacking", false);
                 enemyAnimations.SetBool("Running", false);
                 break;
 
             case StateOfEnemy.moving:
                 Debug.Log("state is moving");
+                enemyAttack.playerInRange = false;
                 enemyAnimations.SetBool("Running", true);
                 enemyAnimations.SetBool("Attacking", false);
                 UpdateAnimationAndMovement();
@@ -208,6 +214,7 @@ public class EnemyMovement : MonoBehaviour
 
             case StateOfEnemy.attack:
                 Debug.Log("state is attacking");
+                enemyAttack.playerInRange = true;
                 enemyAnimations.SetBool("Running", false);
                 enemyAnimations.SetBool("Attacking", true);
                 StartCoroutine(animationCoroutine());
