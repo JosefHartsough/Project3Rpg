@@ -18,14 +18,14 @@ public class Knockback : MonoBehaviour
     {
         if (other.gameObject.CompareTag("enemy"))
         {
-            Rigidbody2D hit = other.GetComponent<Rigidbody2D>();
-            if(hit != null)
-            {
-                Vector2 difference = hit.transform.position - transform.position;
-                difference = difference.normalized * forceOfKnockback;
-                hit.AddForce(difference, ForceMode2D.Impulse);
-                //StartCoroutine(KnockCoroutine(enemy));
-            }
+            // Rigidbody2D enemy = other.GetComponent<Rigidbody2D>();
+            // if(enemy != null)
+            // {
+            //     Vector2 difference = enemy.transform.position - transform.position;
+            //     difference = difference.normalized * forceOfKnockback;
+            //     enemy.AddForce(difference, ForceMode2D.Impulse);
+            //     //StartCoroutine(KnockCoroutine(enemy));
+            // }
         }
     }
 

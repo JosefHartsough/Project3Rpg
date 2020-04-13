@@ -50,6 +50,10 @@ public class EnemyMovement : MonoBehaviour
     private GameObject player;
     private Vector3 player_position;
 
+    // track enemy position
+    private List<Vector3> move_history;
+    private bool good_move;
+
     private void Awake()
     {
         health = maxHealth.intialValue;
@@ -63,7 +67,7 @@ public class EnemyMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         move_history = new List<Vector3>();
-        good_move = false;
+        good_move = true;
     }
 
     // Update is called once per frame
@@ -85,34 +89,64 @@ public class EnemyMovement : MonoBehaviour
         double dist_to_player_x = (double)(player_position.x - enemy_position.x);
         double dist_to_player_y = (double)(player_position.y - enemy_position.y);
         double diagonal_distance = Math.Sqrt(dist_to_player_x * dist_to_player_x + dist_to_player_y * dist_to_player_y);
-        Debug.Log("diagonal_distance: " + diagonal_distance);
 
         determineGoodOrBadMove();
         // When the enemy is further than 1 away, move
         if (diagonal_distance > 1){
             enemyState = StateOfEnemy.moving;
-            // I am further from the player in the x direction
-            if (Math.Abs(dist_to_player_x) >= Math.Abs(dist_to_player_y)){
 
-                // negative x means the player is to my left
-                if (dist_to_player_x < 0) {
-                    changeInPosition.x = -1;
+            // if it's a good move, take the shortest way, otherwise switch
+            if (good_move) {
+                // I am further from the player in the x direction
+                if (Math.Abs(dist_to_player_x) >= Math.Abs(dist_to_player_y)){
+
+                    // negative x means the player is to my left
+                    if (dist_to_player_x < 0) {
+                        changeInPosition.x = -1;
+                    }
+                    // positive x means the player is to my right
+                    else {
+                        changeInPosition.x = 1;
+                    }
                 }
-                // positive x means thep player is to my right
+                // I am further from the player in the y direction
                 else {
-                    changeInPosition.x = 1;
+
+                    // negative y means the player is below me
+                    if (dist_to_player_y < 0){
+                        changeInPosition.y = -1;
+                    }
+                    // positive y means the player is above me
+                    else {
+                        changeInPosition.y = 1;
+                    }
                 }
             }
-            // I am further from the player in the y direction
+            // we are getting stuck so we need to do the opposite
             else {
+                // I am further from the player in the x direction
+                if (Math.Abs(dist_to_player_x) < Math.Abs(dist_to_player_y)){
 
-                // negative y means the player is below me
-                if (dist_to_player_y < 0){
-                    changeInPosition.y = -1;
+                    // negative x means the player is to my left
+                    if (dist_to_player_x < 0) {
+                        changeInPosition.x = -1;
+                    }
+                    // positive x means the player is to my right
+                    else {
+                        changeInPosition.x = 1;
+                    }
                 }
-                // positive y means the player is above me
+                // I am further from the player in the y direction
                 else {
-                    changeInPosition.y = 1;
+
+                    // negative y means the player is below me
+                    if (dist_to_player_y < 0){
+                        changeInPosition.y = -1;
+                    }
+                    // positive y means the player is above me
+                    else {
+                        changeInPosition.y = 1;
+                    }
                 }
             }
         }
@@ -126,9 +160,18 @@ public class EnemyMovement : MonoBehaviour
 
     // Will tell us whether the enemy is running into walls or not
     void determineGoodOrBadMove(){
-
-        if (move_history.Count > 3){
-
+        if (move_history.Count > 100 && enemyState == StateOfEnemy.moving){
+            Debug.Log(Math.Abs(move_history[move_history.Count - 1].x - move_history[move_history.Count - 10].x));
+            if (Math.Abs(move_history[move_history.Count - 1].x - move_history[move_history.Count - 20].x) < 0.2 &&
+                Math.Abs(move_history[move_history.Count - 1].y - move_history[move_history.Count - 20].y) < 0.2 )
+            {
+                good_move = false;
+            }else {
+                good_move = true;
+            }
+        }
+        if (move_history.Count > 121){
+            move_history.RemoveRange(0, 20);
         }
     }
 
