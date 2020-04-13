@@ -56,7 +56,7 @@ public class EnemyAttack : MonoBehaviour
         if(timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
         {
             // ... attack.
-            Attack ();
+            //Attack ();
         }
 
         // If the player has zero or less health...
