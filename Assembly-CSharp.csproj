@@ -69,13 +69,14 @@
     <Compile Include="Assets\running.cs" />
     <Compile Include="Assets\Scripts\Camera.cs" />
     <Compile Include="Assets\Scripts\EnemyAttack.cs" />
+    <Compile Include="Assets\Scripts\EnemyHealth.cs" />
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\interactListener.cs" />
     <Compile Include="Assets\Scripts\Knockback.cs" />
     <Compile Include="Assets\Scripts\objects\FloatValue.cs" />
     <Compile Include="Assets\Scripts\objects\interactHandler.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-    <Compile Include="Assets\Scripts\PlayerHit.cs" />
+    <Compile Include="Assets\Scripts\PlayerHitting.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Owner/Desktop/CS/game_design/Project3Rpg/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
