@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // TODO: Implement different states. Still need to work on:death, attack1, attack2, itemUse1,itemUse2.
 // Enum for our players state. (This is a state machine)
@@ -37,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator playerAnimations;
 
     // Start is called before the first frame update
+
+   
     void Start()
     {
         playerState = StateOfPlayer.walk;
@@ -44,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         playerAnimations.SetFloat("moveX", 0);
         playerAnimations.SetFloat("moveY", -1);
+        
+        
     }
 
     // Update is called once per frame
@@ -64,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
             UpdateAnimationAndMovement();
         }
         UpdateAnimationAndMovement();
+        
     }
     // These are called Coroutines. They are used for animations.
     // Creates a small delay between the attack animations and walking.

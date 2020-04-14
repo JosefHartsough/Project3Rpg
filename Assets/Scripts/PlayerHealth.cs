@@ -20,6 +20,9 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;                                                // Whether the player is dead.
     bool damaged;                                               // True when the player gets damaged.
 
+    // Access UI object in Unity
+    [SerializeField]
+    GameObject DeathUI;
 
     void Awake()
     {
@@ -101,6 +104,9 @@ public class PlayerHealth : MonoBehaviour
         // Turn off the movement and shooting scripts.
         playerMovement.enabled = false;
         //playerShooting.enabled = false;
+        
+        // Enables the Death UI gameobject in Unity
+        DeathUI.gameObject.SetActive(true);
     }
 
 }
