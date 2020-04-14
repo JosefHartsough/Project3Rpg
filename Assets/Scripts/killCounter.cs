@@ -14,18 +14,28 @@ public class killCounter : MonoBehaviour
     public Text enemyCountText;
     public Text winCountText;
 
+    void Start(){
+        if (enemyCountText != null){
+            enemyCountText.text = "Enemies Remaining: ";
+        }
+    }
+
     void Update() {
         // Array of our enemies. It will be
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
         if (enemies != null)
         {
-            enemyCountText.text = "Enemies Remaining: " + enemies.Length.ToString();
+            if (enemyCountText != null) {
+                enemyCountText.text = "Enemies Remaining: " + enemies.Length.ToString();
+            }
             if (enemies.Length == 0)
             {
                 WinUI.gameObject.SetActive(true);
-                winCountText.text = "You had " + enemies.Length.ToString() + " enemies remaining!";
+                if (winCountText != null){
+                    winCountText.text = "You had " + enemies.Length.ToString() + " enemies remaining!";
+                }
             }
         }
-        
+
     }
 }
