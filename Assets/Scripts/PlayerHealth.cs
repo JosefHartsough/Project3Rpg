@@ -8,6 +8,10 @@ public class PlayerHealth : MonoBehaviour
     public int startingHealth = 100;                            // The amount of health the player starts the game with.
     public int currentHealth;                                   // The current health the player has.
     public Slider healthSlider;                                 // Reference to the UI's health bar.
+    public int regenAmount = 5;                                 // The amount of health the player will regenerate per second.
+    public int regenWait = 2;                                   // The time the player must wait after damage to regen.
+    private float timeSinceDamage = -1;                         // The last time the player was hit
+    private float regeneratedHealth;                            // Health amount regenerated.
     public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
     public AudioClip deathClip;                                 // The audio clip to play when the player dies.
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
@@ -23,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
     // Access UI object in Unity
     [SerializeField]
     GameObject DeathUI;
+
 
     void Awake()
     {
@@ -41,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
     {
 
     }
+
 
     // Update is called once per frame
     void Update()
@@ -61,6 +67,11 @@ public class PlayerHealth : MonoBehaviour
         // Reset the damaged flag.
         damaged = false;
 
+        //If player has lost health and is past wait time
+        if (timeSinceDamage >= 0 && Time.time - timeSinceDamage >= regenWait)
+        {
+            Regen();
+        }
     }
 
     public void TakeDamage(int amount)
@@ -83,8 +94,25 @@ public class PlayerHealth : MonoBehaviour
             // ... it should die.
             Death();
         }
+        //Set time last taken damage
+        timeSinceDamage = Time.time;
+
     }
 
+    void Regen()
+    {
+        regeneratedHealth+= regenAmount * Time.deltaTime;
+        int flooredRegeneratedHealth = Mathf.FloorToInt(regeneratedHealth);
+        regeneratedHealth -= flooredRegeneratedHealth;
+        Heal(flooredRegeneratedHealth);
+    }
+
+    void Heal(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
+        healthSlider.value = currentHealth;
+
+    }
 
     void Death()
     {
@@ -104,9 +132,9 @@ public class PlayerHealth : MonoBehaviour
         // Turn off the movement and shooting scripts.
         playerMovement.enabled = false;
         //playerShooting.enabled = false;
-        
-        // Enables the Death UI gameobject in Unity
-        DeathUI.gameObject.SetActive(true);
+
+       // Enables the Death UI gameobject in Unity
+       DeathUI.gameObject.SetActive(true);
     }
 
 }

@@ -33,10 +33,10 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log("enemy health: " + currentHealth);
         // If the enemy should be sinking...
-        if(isSinking)
+        if (isSinking)
         {
             // ... move the enemy down by the sinkSpeed per second.
-            transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+            transform.Translate(-Vector3.up * sinkSpeed * Time.deltaTime);
         }
     }
 
@@ -81,12 +81,13 @@ public class EnemyHealth : MonoBehaviour
         // capsuleCollider.isTrigger = true;
 
         // Tell the animator that the enemy is dead.
-        anim.SetTrigger ("Die");
+        anim.SetTrigger("Die");
+
 
         // ****************************************
         // THIS NEEDS TO MOVE
         // ********************************************
-        StartSinking();
+        //StartSinking();
 
         // Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
         // enemyAudio.clip = deathClip;
@@ -96,13 +97,15 @@ public class EnemyHealth : MonoBehaviour
 
     public void StartSinking ()
     {
+
+        //anim.Play("LightGuard_Death");
         // Find and disable the Nav Mesh Agent.
         GetComponent<SpriteRenderer>().enabled = false;
 
         // Find the rigidbody component and make it kinematic (since we use Translate to sink the enemy).
         GetComponent <Rigidbody2D> ().isKinematic = true;
 
-        // The enemy should no sink.
+        // The enemy should now sink.
         isSinking = true;
 
         // Increase the score by the enemy's score value.
