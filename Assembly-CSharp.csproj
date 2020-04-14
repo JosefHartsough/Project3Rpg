@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\EnemyHealth.cs" />
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\interactListener.cs" />
+    <Compile Include="Assets\Scripts\killCounter.cs" />
     <Compile Include="Assets\Scripts\Knockback.cs" />
     <Compile Include="Assets\Scripts\objects\FloatValue.cs" />
     <Compile Include="Assets\Scripts\objects\interactHandler.cs" />
