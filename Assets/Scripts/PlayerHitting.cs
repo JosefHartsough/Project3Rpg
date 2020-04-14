@@ -35,27 +35,27 @@ public class PlayerHitting : MonoBehaviour
         player_position = transform.position;
 
         // Get the enemy sprite
-        Object enemies = GameObject.FindGameObjectsWithTag("enemy");
-        foreach (Object enemy in enemies) {
-            Debug.Log(enemy);
-            if (enemy != null){
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                Vector3 enemy_position = enemy.transform.position;
-                // determine enemy distance
-                double dist_to_enemy_x = (double)(player_position.x - enemy_position.x);
-                double dist_to_enemy_y = (double)(player_position.y - enemy_position.y);
-                double diagonal_distance = Math.Sqrt(dist_to_enemy_x * dist_to_enemy_x + dist_to_enemy_y * dist_to_enemy_y);
-                // Debug.Log("diagonal_distance to player: " + diagonal_distance);
-
-                // If the Fire1 button is being press and it's time to fire...
-                if(Input.GetButton ("attack") && timer >= timeBetweenSwings && diagonal_distance < 2.5)
-                {
-                    // ... swing your sword.
-                    timer = 0f;
-                    enemyHealth.TakeDamage(damagePerSwing);
-                }
-            }
-        }
+        // Object enemies = GameObject.FindGameObjectsWithTag("enemy");
+        // foreach (Object enemy in enemies) {
+        //     Debug.Log(enemy);
+        //     if (enemy != null){
+        //         EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+        //         Vector3 enemy_position = enemy.transform.position;
+        //         // determine enemy distance
+        //         double dist_to_enemy_x = (double)(player_position.x - enemy_position.x);
+        //         double dist_to_enemy_y = (double)(player_position.y - enemy_position.y);
+        //         double diagonal_distance = Math.Sqrt(dist_to_enemy_x * dist_to_enemy_x + dist_to_enemy_y * dist_to_enemy_y);
+        //         // Debug.Log("diagonal_distance to player: " + diagonal_distance);
+        //
+        //         // If the Fire1 button is being press and it's time to fire...
+        //         if(Input.GetButton ("attack") && timer >= timeBetweenSwings && diagonal_distance < 2.5)
+        //         {
+        //             // ... swing your sword.
+        //             timer = 0f;
+        //             enemyHealth.TakeDamage(damagePerSwing);
+        //         }
+        //     }
+        // }
 
         // GameObject enemy_light = GameObject.Find("Enemy_Light");
         // if (enemy_light != null){
