@@ -10,11 +10,13 @@ public class PlayerHitting : MonoBehaviour
     public float range = 100f;                      // The distance the gun can fire.
     float timer;                                    // A timer to determine when to fire.
 
+    private GameObject[] enemies;
+
     private Vector3 player_position;
 
     void Awake()
     {
-
+        enemies = new GameObject[50];
     }
 
     // Start is called before the first frame update
