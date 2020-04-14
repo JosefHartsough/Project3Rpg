@@ -1,27 +1,29 @@
 ﻿<Properties StartupConfiguration="{658F5258-01E2-FE2A-1981-CF5DF9BC5C9E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerHealth.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/killCounter.cs">
     <Files>
       <File FileName="Assets/Scripts/EnemyAttack.cs" Line="72" Column="1" />
-      <File FileName="Assets/Scripts/PlayerHealth.cs" Line="103" Column="40" />
-      <File FileName="Assets/Scripts/EnemyHealth.cs" Line="109" Column="26" />
-      <File FileName="Assets/Scripts/PlayerHitting.cs" Line="3" Column="1" />
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="72" Column="35" />
-      <File FileName="Assets/Scripts/Camera.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/EnemyMovement.cs" Line="207" Column="18" />
-      <File FileName="Assets/Scripts/interactListener.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerHealth.cs" Line="18" Column="115" />
+      <File FileName="Assets/Scripts/EnemyHealth.cs" />
+      <File FileName="Assets/Scripts/PlayerHitting.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerMovement.cs" />
+      <File FileName="Assets/Scripts/Camera.cs" />
+      <File FileName="Assets/Scripts/EnemyMovement.cs" />
       <File FileName="Assets/Scripts/Knockback.cs" Line="1" Column="1" />
-      <File FileName="Assets/Bandits - Pixel Art/Demo/CharacterSelector_Bandit.cs" Line="7" Column="34" />
+      <File FileName="Assets/Bandits - Pixel Art/Demo/CharacterSelector_Bandit.cs" />
+      <File FileName="Assets/Scripts/killCounter.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/RestartGame.cs" />
+      <File FileName="Assets/Scripts/gameOverCount.cs" Line="20" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Project3Rpg" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Bandits - Pixel Art" expanded="True">
-                <Node name="Demo" expanded="True" />
-              </Node>
+              <Node name="Animations" expanded="True" />
+              <Node name="Art" expanded="True" />
+              <Node name="Bandits - Pixel Art" expanded="True" />
               <Node name="Scripts" expanded="True">
-                <Node name="PlayerHealth.cs" selected="True" />
+                <Node name="killCounter.cs" selected="True" />
               </Node>
             </Node>
           </Node>
